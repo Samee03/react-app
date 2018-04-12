@@ -1,8 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+setInterval(function () {
+    ReactDOM.render(
+        <h2>Time Now:- {new Date().toLocaleTimeString()}</h2>,
+        document.getElementById('root')
+    );
+});
