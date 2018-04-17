@@ -1,37 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-function Message(props) {
-    if(props.value) {
-        return <h1>I'm First Message!</h1>
-    } else {
-        return <h1>I'm Second Message!</h1>
-    }
+function ToonsList(props) {
+    const list = props.cartoons;
+    // const toons = list.map((list, index) => <li key={index}>{list}</li>);
+
+    return <ul>
+        {list.map((list, index) => <li key={index}>{list}</li>)}
+    </ul>
 }
-
-class Btn extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {value : true}
-    }
-
-    handleEvent = () => {
-        this.setState({
-            value: !this.state.value
-        });
-    }
-
-    render() {
-        return(
-            <div>
-                <button onClick={this.handleEvent}>Change Text</button>
-                <Message value={this.state.value}/>
-            </div>
-        );
-    }
-}
+const cartoons = ['Pikacu', 'Aladdin', 'Tom', 'Tom'];
 
 ReactDOM.render(
-    <Btn />,
+    <ToonsList cartoons={cartoons}/>,
     document.getElementById('root')
 );
