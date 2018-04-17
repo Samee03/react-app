@@ -1,62 +1,40 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-class FormTest extends React.Component {
-    constructor(props){
+class Calculator extends React.Component {
+    constructor(props) {
         super(props)
-        this.state = {value: '', submit:'', checkbox: false, text:''}
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.setState({
-            submit: this.state.value + ' | ' + this.state.text + ' | ' + this.state.checkbox,
-        })
-    }
-
-    handleInput = (e) => {
-        this.setState({
-            value: e.target.value,
-        })
-    }
-
-    handleText = (e) => {
-        this.setState({
-            text: e.target.value
-        })
-    }
-
-    handleCheck = (e) => {
-        this.setState({
-            checkbox: !this.state.checkbox
-        })
+        this.state = {scale:'c', temp:0}
     }
 
     render() {
-        return(
+        const temp = this.state.temp;
+        const celsius = this.state.scale === 'f' ? (temp - 32) * 5 / 9 : temp;
+        const fahrenheit = this.state.scale === 'c' ? (temp * 9 / 5) + 32 : temp;
+        return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.value} onChange={this.handleInput}/><br/><br/>
-
-                    <textarea name="text" id="text" cols="30" rows="10" value={this.state.text} onChange={this.handleText}/><br/>
-
-                    <label htmlFor="">Checkbox
-                        <input type="checkbox" value={this.state.checkbox} onChange={this.handleCheck}/>
-                    </label><br/><br/>
-
-                    <input type="submit" value={'Go Ahead'}/>
-                </form>
-
-                <h3>Value OnChangeInput = {this.state.value}</h3>
-                <h3>Value OnChangeText = {this.state.text}</h3>
-                <h3>Value OnChangeCheckbox = {this.state.checkbox.toString()}</h3>
-                <h3>Value OnSubmit = {this.state.submit}</h3>
+                <fieldset>
+                    <legend>Scale Celsius</legend>
+                    <input type={'text'} value={celsius} onChange={this.handleCelsius}/>
+                </fieldset>
+                <fieldset>
+                    <legend>Scale Fahrenheit</legend>
+                    <input type={'text'} value={fahrenheit} onChange={this.handleFahrenheit}/>
+                </fieldset>
             </div>
         )
+    }
+
+    handleCelsius = (e) => {
+        this.setState({scale:'c', temp:e.target.value})
+    }
+
+    handleFahrenheit = (e) => {
+        this.setState({scale:'f', temp:e.target.value})
     }
 }
 
 ReactDOM.render(
-    <FormTest/>,
+    <Calculator />,
     document.getElementById('root')
 );
