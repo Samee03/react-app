@@ -8,19 +8,13 @@ class Calculator extends React.Component {
     }
 
     render() {
-        const temp = this.state.temp;
-        const celsius = this.state.scale === 'f' ? (temp - 32) * 5 / 9 : temp;
-        const fahrenheit = this.state.scale === 'c' ? (temp * 9 / 5) + 32 : temp;
+        const temp = this.state.temp
+        const celsius = this.state.scale === 'f' ? convert(temp, toCelsius) : temp
+        const fahrenheit = this.state.scale === 'c' ? convert(temp, toFahrenheit) : temp
         return (
             <div>
-                <fieldset>
-                    <legend>Scale Celsius</legend>
-                    <input type={'text'} value={celsius} onChange={this.handleCelsius}/>
-                </fieldset>
-                <fieldset>
-                    <legend>Scale Fahrenheit</legend>
-                    <input type={'text'} value={fahrenheit} onChange={this.handleFahrenheit}/>
-                </fieldset>
+                <Inputs scalename={'Celsius'} value={celsius} func={this.handleCelsius} />
+                <Inputs scalename={'Fahrenheit'} value={fahrenheit} func={this.handleFahrenheit}/>
             </div>
         )
     }
@@ -31,6 +25,29 @@ class Calculator extends React.Component {
 
     handleFahrenheit = (e) => {
         this.setState({scale:'f', temp:e.target.value})
+    }
+}
+
+function convert(temp, convertFunction) {
+    return convertFunction(temp);
+}
+
+function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+}
+
+class Inputs extends React.Component {
+    render() {
+        return (
+            <fieldset>
+                <legend>Scale {this.props.scalename}</legend>
+                <input type={'text'} value={this.props.value} onChange={this.props.func}/>
+            </fieldset>
+        )
     }
 }
 
